@@ -1,0 +1,43 @@
+7.a
+Sera una tabla,
+
+Socio borrower_id
+Tipo de ahorro (Ayuda Mutua, Aportaciones, Ahorro Retirable) type
+Balance Actual current_balance
+Balance Total total_balance
+Colocar un icono de imprimir, este va a generar una factura con los detalles de la tabla
+
+7.c
+Verificar que solo los administradores puedan eliminar items
+Solo se va a insertar en el modulo de ahorro las otras vista de ahorro solo seran de consulta de datos
+Manejar las excepciones con los campos al realizar las distintas operaciones.
+- Llamada de la base de datos
+- Manejar excepciones del php
+- Campos a llenar en html para los cruds
+Cambiar colores de los campos
+
+// let elements = e.target.elements;	current_balance total_balance
+		// let msg = '';
+		// let validate = true;
+		// let string_validate = new RegExp('/[A-Za-z]{1,25}/gi');
+		// let address_validate = new RegExp('/[\D\s0-9]{45}/gi');
+		// let rol_validate = new RegExp('/admin|staff/');
+		// let number_validate = new RegExp('/8[0?2?4]9[0-9]{7}/');
+
+		// if(elements['name'].value != undefined && string_validate.test(elements['name'].value)) msg += "El nombre debe contener solo letras A-Za-z.\n";
+        // if(elements['username'].value != undefined && string_validate.test(elements['username'].value))  msg += "El nombre de usuario debe contener solo letras A-Za-z.\n";
+		// if(elements['type'] != undefined && rol_validate.test(elements['type'].value))  msg += "Tipo de usuario incorrecto.\n";
+		// if(elements['phone'].value != undefined && number_validate.test(elements['phone'].value))  msg += "Formato de número incorrecto incorrecto.\n";
+		// if(elements['address'].value != undefined && address_validate.test(elements['address'].value))  msg += "Formato de dirección incorrecta.\n";
+
+		// let pass1 =  elements['password'].value;
+		// let pass2 = elements['password2'].value;
+		// if(pass1 != pass2)  msg += 'Las contraseñas no coinciden.';
+		
+		// if( msg.length > 0){
+		// 	validate = false;
+		// 	alert(msg);
+		// }
+
+		//if(validate){
+			//}
