@@ -8,8 +8,8 @@
 			<a href="index.php?page=loan_type" class="nav-item nav-loan_type"></i></span> Tipos de Prestamos</a>
 			<a href="index.php?page=saving" class="nav-item nav-users">Ahorro
 				<a href="index.php?page=saving_mutual_help" class="nav-item nav-users" style="padding-left: 35px;"><i class="icofont-ui-clip text-secondary mr-2"></i>Ayuda Mutua</a>
-				<a href="index.php?page=saving_contributions" class="nav-item nav-users" style="padding-left: 35px;"><i class="icofont-ui-clip text-secondary mr-2"></i>Aportaciones</a>	
-				<a href="index.php?page=saving_withdrawable_savings" class="nav-item nav-users" style="padding-left: 35px;"><i class="icofont-ui-clip text-secondary mr-2"></i>Ahorro Retirable</a>		
+				<a href="index.php?page=saving_contribution" class="nav-item nav-users" style="padding-left: 35px;"><i class="icofont-ui-clip text-secondary mr-2"></i>Aportaciones</a>	
+				<a href="index.php?page=saving_withdrawable" class="nav-item nav-users" style="padding-left: 35px;"><i class="icofont-ui-clip text-secondary mr-2"></i>Ahorro Retirable</a>		
 			</a>		
 			<?php if($_SESSION['login_type'] == "admin"): ?>
 				<a href="index.php?page=users" class="nav-item nav-users"></i></span> Usuarios</a>	

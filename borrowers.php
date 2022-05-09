@@ -49,7 +49,9 @@ include 'db_connect.php' ?>
 						 	<td class="">N/A</td>
 						 	<td class="text-center">
 						 			<button class="btn btn-outline-primary btn-sm edit_borrower" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
-						 			<button class="btn btn-outline-danger btn-sm delete_borrower" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash"></i></button>
+									 <?php if($_SESSION['login_type'] == "admin"):?>
+						 				<button class="btn btn-outline-danger btn-sm delete_borrower" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash"></i></button>
+									<?php endif;?>
 						 	</td>
 
 						 </tr>
@@ -264,13 +266,13 @@ include 'db_connect.php' ?>
 
 	
 	$('#new_borrower').click(function(){
-		uni_modal("Prestatario","manage_borrower.php",'mid-large')
+		uni_modal("Socios","manage_borrower.php",'mid-large')
 	})
 	$('.edit_borrower').click(function(){
-		uni_modal("Editar prestatario","manage_borrower.php?id="+$(this).attr('data-id'),'mid-large')
+		uni_modal("Editar socios","manage_borrower.php?id="+$(this).attr('data-id'),'mid-large')
 	})
 	$('.delete_borrower').click(function(){
-		_conf("Seguro que quieres eliminar este afiliado?","delete_borrower",[$(this).attr('data-id')])
+		_conf("Seguro que quieres eliminar este socio?","delete_borrower",[$(this).attr('data-id')])
 	})
 function delete_borrower($id){
 		start_load()

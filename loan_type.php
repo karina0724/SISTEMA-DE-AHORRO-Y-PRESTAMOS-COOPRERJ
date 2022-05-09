@@ -68,7 +68,9 @@ include('db_connect.php');
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-success edit_ltype" type="button" data-id="<?php echo $row['id'] ?>" data-type_name="<?php echo $row['type_name'] ?>" data-description="<?php echo $row['description'] ?>" >Editar</button>
-										<button class="btn btn-sm btn-danger delete_ltype" type="button" data-id="<?php echo $row['id'] ?>">Eliminar</button>
+										<?php if($_SESSION['login_type'] == "admin"):?>
+											<button class="btn btn-sm btn-danger delete_ltype" type="button" data-id="<?php echo $row['id'] ?>">Eliminar</button>
+										<?php endif?>
 									</td>
 								</tr>
 								<?php endwhile; ?>

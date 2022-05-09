@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.3.0-dev+20220507.f68a18df64
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 26, 2020 at 10:21 AM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.2.33
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 08-05-2022 a las 17:36:58
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `loan_db`
+-- Base de datos: `loan_db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `borrowers`
+-- Estructura de tabla para la tabla `borrowers`
 --
 
 CREATE TABLE `borrowers` (
@@ -35,21 +35,25 @@ CREATE TABLE `borrowers` (
   `contact_no` varchar(30) NOT NULL,
   `address` text NOT NULL,
   `email` varchar(50) NOT NULL,
+  `salary` varchar(11) NOT NULL,
   `tax_id` varchar(50) NOT NULL,
-  `date_created` int(11) NULL
+  `date_created` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `borrowers`
+-- Volcado de datos para la tabla `borrowers`
 --
 
-INSERT INTO `borrowers` (`id`, `firstname`, `middlename`, `lastname`, `contact_no`, `address`, `email`, `tax_id`, `date_created`) VALUES
-(1, 'John', 'C', 'Smith', '+16554 454654', 'Sample address', 'jsmith@sample.com', '789845-23', 0);
+INSERT INTO `borrowers` (`id`, `firstname`, `middlename`, `lastname`, `contact_no`, `address`, `email`, `salary`, `tax_id`, `date_created`) VALUES
+(1, 'John', 'C', 'Smith', '+16554 454654', 'Sample address', 'jsmith@sample.com', '20000', '789845-23', 0),
+(2, 'Karina', 'Karina', 'Montero', '8091111111', 'Calle 3', 'karina@gmail.com', '30000', '65', NULL),
+(3, 'Vanessa', 'Luz', 'Montero', '8091111111', 'Calle 2', 'vanessa@hotmail.com', '40000', '8943', NULL),
+(4, 'Juan', 'Carlos', 'Soto', '8091111111', 'Calle 2', 'jsoto@gmail.com', '', '54', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loan_list`
+-- Estructura de tabla para la tabla `loan_list`
 --
 
 CREATE TABLE `loan_list` (
@@ -57,27 +61,28 @@ CREATE TABLE `loan_list` (
   `ref_no` varchar(50) NOT NULL,
   `loan_type_id` int(30) NOT NULL,
   `borrower_id` int(30) NOT NULL,
-  `purpose` text NULL,
+  `purpose` text DEFAULT NULL,
   `amount` double NOT NULL,
   `plan_id` int(30) NOT NULL,
-  `status` tinyint(1) NULL DEFAULT 0 COMMENT '0= request, 1= confrimed,2=released,3=complteted,4=denied\r\n',
-  `date_released` datetime NULL,
-  `date_created` datetime NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `status` tinyint(1) DEFAULT 0 COMMENT '0= request, 1= confrimed,2=released,3=complteted,4=denied\r\n',
+  `date_released` datetime DEFAULT NULL,
+  `date_created` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `loan_list`
+-- Volcado de datos para la tabla `loan_list`
 --
 
-
-
 INSERT INTO `loan_list` (`id`, `ref_no`, `loan_type_id`, `borrower_id`, `purpose`, `amount`, `plan_id`, `status`, `date_released`, `date_created`) VALUES
-(3, '81409630', 1, 1, 'Sample Only', 100000, 1, 2, '2020-09-26 09:06:00', '2020-09-26 15:06:29');
+(3, '81409630', 1, 1, 'Sample Only', 100000, 1, 2, '2020-09-26 09:06:00', '2020-09-26 15:06:29'),
+(4, '64460504', 3, 2, 'Para pagar la luz', 2500, 1, 1, NULL, '2022-05-01 21:12:20'),
+(5, '62262361', 3, 3, 'Comprar carro', 40000, 3, 0, NULL, '2022-05-07 11:48:26'),
+(6, '23704152', 1, 2, 'Pago de Vivienda', 40000, 1, 0, NULL, '2022-05-07 13:02:19');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loan_plan`
+-- Estructura de tabla para la tabla `loan_plan`
 --
 
 CREATE TABLE `loan_plan` (
@@ -88,18 +93,19 @@ CREATE TABLE `loan_plan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `loan_plan`
+-- Volcado de datos para la tabla `loan_plan`
 --
 
 INSERT INTO `loan_plan` (`id`, `months`, `interest_percentage`, `penalty_rate`) VALUES
 (1, 36, 8, 3),
 (2, 24, 5, 2),
-(3, 27, 6, 2);
+(3, 27, 6, 2),
+(4, 12, 3, 80);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loan_schedules`
+-- Estructura de tabla para la tabla `loan_schedules`
 --
 
 CREATE TABLE `loan_schedules` (
@@ -109,7 +115,7 @@ CREATE TABLE `loan_schedules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `loan_schedules`
+-- Volcado de datos para la tabla `loan_schedules`
 --
 
 INSERT INTO `loan_schedules` (`id`, `loan_id`, `date_due`) VALUES
@@ -153,7 +159,7 @@ INSERT INTO `loan_schedules` (`id`, `loan_id`, `date_due`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `loan_types`
+-- Estructura de tabla para la tabla `loan_types`
 --
 
 CREATE TABLE `loan_types` (
@@ -163,18 +169,19 @@ CREATE TABLE `loan_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `loan_types`
+-- Volcado de datos para la tabla `loan_types`
 --
 
 INSERT INTO `loan_types` (`id`, `type_name`, `description`) VALUES
 (1, 'Small Business', 'Small Business Loans'),
 (2, 'Mortgages', 'Mortgages'),
-(3, 'Personal Loans', 'Personal Loans');
+(3, 'Personal Loans', 'Personal Loans'),
+(4, 'Big Business', 'Big Business Loan');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `payments`
+-- Estructura de tabla para la tabla `payments`
 --
 
 CREATE TABLE `payments` (
@@ -184,133 +191,252 @@ CREATE TABLE `payments` (
   `amount` float NOT NULL DEFAULT 0,
   `penalty_amount` float NOT NULL DEFAULT 0,
   `overdue` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0=no , 1 = yes',
-  `date_created` datetime NOT DEFAULT current_timestamp()
+  `date_created` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `payments`
+-- Volcado de datos para la tabla `payments`
 --
 
 INSERT INTO `payments` (`id`, `loan_id`, `payee`, `amount`, `penalty_amount`, `overdue`, `date_created`) VALUES
-(2, 3, 'Smith, John C', 3000, 0, 0, '2020-09-26 15:51:01');
+(2, 3, 'Smith, John C', 4000, 90, 1, '2020-09-26 15:51:01'),
+(3, 3, 'Smith, John C', 2000, 90, 1, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Estructura de tabla para la tabla `saving`
+--
+
+CREATE TABLE `saving` (
+  `id` int(11) NOT NULL,
+  `saving_type_id` int(11) NOT NULL,
+  `borrower_id` int(11) NOT NULL,
+  `amount` varchar(11) NOT NULL,
+  `current_balance` varchar(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `saving`
+--
+
+INSERT INTO `saving` (`id`, `saving_type_id`, `borrower_id`, `amount`, `current_balance`) VALUES
+(1, 3, 2, '20000', ' 64999'),
+(2, 2, 1, '30000', ' 15000'),
+(5, 3, 3, '30000', '60000 '),
+(8, 1, 2, '40000', '40000');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `saving_types`
+--
+
+CREATE TABLE `saving_types` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `description` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `saving_types`
+--
+
+INSERT INTO `saving_types` (`id`, `name`, `description`) VALUES
+(1, 'Ayuda Mutua', NULL),
+(2, 'Aportaciones', NULL),
+(3, 'Ahorro Retirable', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `users`
 --
 
 CREATE TABLE `users` (
   `id` int(30) NOT NULL,
-  `doctor_id` int(30) NULL,
   `name` varchar(200) NOT NULL,
-  `address` text NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `membership_number` varchar(30) NOT NULL,
   `contact` text NOT NULL,
+  `email` varchar(30) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(200) NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT 2 COMMENT '1=admin , 2 = staff'
+  `type` enum('admin','staff') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `users`
+-- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `doctor_id`, `name`, `address`, `contact`, `username`, `password`, `type`) VALUES
-(1, 0, 'Administrator', '', '', 'admin', 'admin123', 1);
+INSERT INTO `users` (`id`, `name`, `last_name`, `membership_number`, `contact`, `email`, `username`, `password`, `type`) VALUES
+(1, 'Administrator', 'Gomez', '434345', '8091111118', 'admin@gmail.com', 'admin', 'admin123', 'admin'),
+(50, 'Karina', 'Montero Leonardo', '43', '8091111112', 'kmontero@gmail.com', 'kmontero', '123', 'staff'),
+(51, 'Pedro', 'Montero Leonardo', '43', '8091111112', 'pmontero@gmail.com', 'pmontero', '123', 'admin'),
+(53, 'Ronald', 'Cruz', '545', '8091111112', 'rcruz@gmail.com', 'rcruz', '123', 'staff'),
+(54, 'Johan', 'Fernandez', '943094', '8091111112', 'jfernandez@gmail.com', 'jfernandez', '123', 'staff'),
+(55, 'Cesar', 'Caracas', '587', '8091111112', 'ccaracas@gmail.com', 'ccaracas', '123', 'admin'),
+(56, 'Rosa ', 'Cruz', '89798', '8091111112', 'rosacruz@gmail.com', 'rosacruz', '123', 'staff'),
+(57, 'Ronald Test', 'Cruz', '435', '8091111111', 'rcruz@gmail.com', 'rcruzz', 'admin123', 'staff');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `borrowers`
+-- Indices de la tabla `borrowers`
 --
 ALTER TABLE `borrowers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `loan_list`
+-- Indices de la tabla `loan_list`
 --
 ALTER TABLE `loan_list`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_borrower_id` (`borrower_id`),
+  ADD KEY `fk_loan_type_id` (`loan_type_id`),
+  ADD KEY `fk_loan_plan_id` (`plan_id`);
 
 --
--- Indexes for table `loan_plan`
+-- Indices de la tabla `loan_plan`
 --
 ALTER TABLE `loan_plan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `loan_schedules`
+-- Indices de la tabla `loan_schedules`
 --
 ALTER TABLE `loan_schedules`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_loan_id` (`loan_id`);
 
 --
--- Indexes for table `loan_types`
+-- Indices de la tabla `loan_types`
 --
 ALTER TABLE `loan_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `payments`
+-- Indices de la tabla `payments`
 --
 ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_loan_list_id` (`loan_id`);
+
+--
+-- Indices de la tabla `saving`
+--
+ALTER TABLE `saving`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_borrower_saving_id` (`borrower_id`),
+  ADD KEY `fk_saving_type_id` (`saving_type_id`);
+
+--
+-- Indices de la tabla `saving_types`
+--
+ALTER TABLE `saving_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indices de la tabla `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `borrowers`
+-- AUTO_INCREMENT de la tabla `borrowers`
 --
 ALTER TABLE `borrowers`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `loan_list`
+-- AUTO_INCREMENT de la tabla `loan_list`
 --
 ALTER TABLE `loan_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `loan_plan`
+-- AUTO_INCREMENT de la tabla `loan_plan`
 --
 ALTER TABLE `loan_plan`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `loan_schedules`
+-- AUTO_INCREMENT de la tabla `loan_schedules`
 --
 ALTER TABLE `loan_schedules`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
--- AUTO_INCREMENT for table `loan_types`
+-- AUTO_INCREMENT de la tabla `loan_types`
 --
 ALTER TABLE `loan_types`
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `payments`
+--
+ALTER TABLE `payments`
   MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `payments`
+-- AUTO_INCREMENT de la tabla `saving`
 --
-ALTER TABLE `payments`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `saving`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT de la tabla `saving_types`
+--
+ALTER TABLE `saving_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `loan_list`
+--
+ALTER TABLE `loan_list`
+  ADD CONSTRAINT `fk_borrower_id` FOREIGN KEY (`borrower_id`) REFERENCES `borrowers` (`id`),
+  ADD CONSTRAINT `fk_loan_plan_id` FOREIGN KEY (`plan_id`) REFERENCES `loan_plan` (`id`),
+  ADD CONSTRAINT `fk_loan_type_id` FOREIGN KEY (`loan_type_id`) REFERENCES `loan_types` (`id`);
+
+--
+-- Filtros para la tabla `loan_schedules`
+--
+ALTER TABLE `loan_schedules`
+  ADD CONSTRAINT `fk_loan_id` FOREIGN KEY (`loan_id`) REFERENCES `loan_list` (`id`);
+
+--
+-- Filtros para la tabla `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `fk_loan_list_id` FOREIGN KEY (`loan_id`) REFERENCES `loan_list` (`id`);
+
+--
+-- Filtros para la tabla `saving`
+--
+ALTER TABLE `saving`
+  ADD CONSTRAINT `fk_borrower_saving_id` FOREIGN KEY (`borrower_id`) REFERENCES `borrowers` (`id`),
+  ADD CONSTRAINT `fk_saving_type_id` FOREIGN KEY (`saving_type_id`) REFERENCES `saving_types` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+

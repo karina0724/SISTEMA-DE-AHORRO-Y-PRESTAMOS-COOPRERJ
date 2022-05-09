@@ -7,7 +7,6 @@ if(isset($_GET['id'])){
 		$$k = $val;
 	}
 }
-
 ?>
 <div class="container-fluid">
 	<div class="col-lg-12">
@@ -18,16 +17,17 @@ if(isset($_GET['id'])){
 					<div class="form-group">
                         <label class="control-label">Socio</label>
                         <?php
-                        $borrower = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM borrowers order by concat(lastname,', ',firstname,' ',middlename) asc ");
+                        $borrower = $conn->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name, salary FROM borrowers order by concat(lastname,', ',firstname,' ',middlename) asc ");
                         ?>
                         <select name="borrower_id" id="borrower_id" class="custom-select browser-default select2">
                             <option value=""></option>
                                 <?php while($row = $borrower->fetch_assoc()): ?>
-                                    <option value="<?php echo $row['id'] ?>" <?php echo isset($borrower_id) && $borrower_id == $row['id'] ? "selected" : '' ?>><?php echo $row['name'] . ' | Tax ID:'.$row['tax_id'] ?></option>
+                                    <option value="<?php echo $row['id'] ?>" data-salary="<?php echo $row['salary'] ?>" <?php echo isset($borrower_id) && $borrower_id == $row['id'] ? "selected" : '' ?>><?php echo $row['name'] . ' | Tax ID:'.$row['tax_id'] ?></option>
                                 <?php endwhile; ?>
                         </select>
 					</div>
 				</div>
+		
 				<div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label" id="saving_type_id">Tipo de Ahorro</label>
@@ -62,8 +62,12 @@ if(isset($_GET['id'])){
     if($('#current_balance').val() <= 0) {
         $('#amount').change(function(){
         $('#current_balance').val($(this).val());
-    });
+      });
     }
+
+	$('#borrower_id').change(function(){
+        $('#borrower_salary').val($(this).val());
+    });
         
 	$('#manage-saving').submit(function(e){
 	 	e.preventDefault()

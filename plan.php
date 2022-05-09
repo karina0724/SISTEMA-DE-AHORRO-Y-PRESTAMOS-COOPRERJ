@@ -93,7 +93,9 @@ include('db_connect.php');
 									</td>
 									<td class="text-center">
 										<button class="btn btn-sm btn-success edit_plan" type="button" data-id="<?php echo $row['id'] ?>" data-months="<?php echo $row['months'] ?>" data-interest_percentage="<?php echo $row['interest_percentage'] ?>" >Editar</button>
-										<button class="btn btn-sm btn-danger delete_plan" type="button" data-id="<?php echo $row['id'] ?>">Eliminar</button>
+										<?php if($_SESSION['login_type'] == "admin"):?>
+											<button class="btn btn-sm btn-danger delete_plan" type="button" data-id="<?php echo $row['id'] ?>">Eliminar</button>
+										<?php endif;?>
 									</td>
 								</tr>
 								<?php endwhile; ?>

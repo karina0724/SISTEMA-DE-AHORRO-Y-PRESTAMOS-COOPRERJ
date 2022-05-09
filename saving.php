@@ -58,7 +58,9 @@ include('db_connect.php') ?>
                 
 						 	<td class="text-center">
 						 			<button class="btn btn-outline-success btn-sm edit_saving" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-edit"></i></button>
-						 			<button class="btn btn-outline-danger btn-sm delete_saving" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash"></i></button>
+									 <?php if($_SESSION['login_type'] == "admin"):?>
+						 				<button class="btn btn-outline-danger btn-sm delete_saving" type="button" data-id="<?php echo $row['id'] ?>"><i class="fa fa-trash"></i></button>
+									<?php endif;?>
 						 	</td>
 
 						 </tr>
